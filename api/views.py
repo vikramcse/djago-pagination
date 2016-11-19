@@ -1,11 +1,11 @@
-from django.http import HttpResponse
+from django.http import JsonResponse
 import json
 
 from api.models import Customer
 
 
 def getlist(request):
-    resp = []
+    data = []
     customer_object = Customer.objects.all()
 
     for customer in customer_object:
@@ -17,6 +17,6 @@ def getlist(request):
             'ip_address': customer.ip_address
         }
 
-        resp.append(single_customer)
+        data.append(single_customer)
 
-    return HttpResponse(json.dumps(resp))
+    return JsonResponse({'data': data})
