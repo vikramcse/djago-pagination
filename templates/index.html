@@ -14,7 +14,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="http://js-grid.com/js/jsgrid.min.js"></script>
 <script>
-        $(function() {
+    $(function () {
 
         $("#jsGrid").jsGrid({
             height: "auto",
@@ -25,18 +25,23 @@
 
             pageSize: 10,
             pageButtonCount: 5,
+            pageLoading: true,
 
             deleteConfirm: "Do you really want to delete client?",
 
             controller: {
-                loadData: function() {
+                loadData: function (filter) {
                     var d = $.Deferred();
 
                     $.ajax({
-                        url: "/pagination/getlist/",
-                        dataType: "json"
-                    }).done(function(response) {
-                        d.resolve(response.data);
+                        type: "GET",
+                        url: "/pagination/getlistwithdjangopagination",
+                        data: filter
+                    }).done(function (result) {
+                        d.resolve({
+                            data: result.data,
+                            itemsCount: result.count
+                        });
                     });
 
                     return d.promise();
@@ -44,12 +49,12 @@
             },
 
             fields: [
-                { name: "id", type: "text", width: 50 },
-                { name: "first_name", type: "text", width: 150 },
-                { name: "last_name", type: "text", width: 150 },
-                { name: "email", type: "text", width: 150 },
-                { name: "gender", type: "text", width: 75 },
-                { name: "ip_address", type: "text", width: 150 }
+                {name: "id", type: "text", width: 50},
+                {name: "first_name", type: "text", width: 150,},
+                {name: "last_name", type: "text", width: 150},
+                {name: "email", type: "text", width: 150},
+                {name: "gender", type: "text", width: 75},
+                {name: "ip_address", type: "text", width: 150}
             ]
         });
 
