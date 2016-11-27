@@ -59,4 +59,4 @@ def get_list_with_django_pagination(request):
 
             data.append(single_customer)
 
-        return JsonResponse({'data': data, 'count': customer_object.count()})
+        return JsonResponse({'data': data, 'count': paginator_object.count})
