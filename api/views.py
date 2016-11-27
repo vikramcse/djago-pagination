@@ -1,5 +1,4 @@
 from django.http import JsonResponse
-import json
 
 from api.models import Customer
 
