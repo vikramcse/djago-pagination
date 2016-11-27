@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pagination Demo</title>
+    <link href="http://js-grid.com/css/jsgrid.min.css" rel="stylesheet"/>
+    <link href="http://js-grid.com/css/jsgrid-theme.min.css" rel="stylesheet"/>
+</head>
+<body>
+<div id="jsGrid"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="http://js-grid.com/js/jsgrid.min.js"></script>
+<script>
+        $(function() {
+
+        $("#jsGrid").jsGrid({
+            height: "auto",
+            width: "100%",
+
+            autoload: true,
+            paging: true,
+
+            pageSize: 10,
+            pageButtonCount: 5,
+
+            deleteConfirm: "Do you really want to delete client?",
+
+            controller: {
+                loadData: function() {
+                    var d = $.Deferred();
+
+                    $.ajax({
+                        url: "/pagination/getlist/",
+                        dataType: "json"
+                    }).done(function(response) {
+                        d.resolve(response.data);
+                    });
+
+                    return d.promise();
+                }
+            },
+
+            fields: [
+                { name: "id", type: "text", width: 50 },
+                { name: "first_name", type: "text", width: 150 },
+                { name: "last_name", type: "text", width: 150 },
+                { name: "email", type: "text", width: 150 },
+                { name: "gender", type: "text", width: 75 },
+                { name: "ip_address", type: "text", width: 150 }
+            ]
+        });
+
+    });
+</script>
+</body>
+</html>
